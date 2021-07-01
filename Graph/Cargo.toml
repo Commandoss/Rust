@@ -1,0 +1,23 @@
+[package]
+name = "Graph"
+version = "0.1.0"
+edition = "2018"
+authors = ["Belousov Ilya <ilya-10x@ya.ru"]
+repository = "https://github.com/Commandoss/Rust"
+homepage = "https://github.com/Commandoss/Rust"
+license = "MIT"
+readme = "README.md"
+documentation = "https://github.com/Commandoss/Rust"
+description = "Graph creation and editing library."
+
+[[bin]]
+name = "lib"
+path = "src/lib.rs"
+
+#name = "libGraph"
+#path = "src/direct/libGraph.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+

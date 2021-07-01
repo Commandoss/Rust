@@ -1,0 +1,14 @@
+[package]
+name = "Graph"
+version = "0.1.0"
+edition = "2021"
+repository = "https://github.com/Commandoss/Rust/GrapLib"
+homepage = "https://github.com/Commandoss/Rust/GrapLib"
+license = "MIT"
+readme = "Readme.md"
+documentation = "https://github.com/Commandoss/Rust/GrapLib"
+description = "A library for working with a graph, namely, creating a traversal of vertices and others."
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
