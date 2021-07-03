@@ -3,6 +3,8 @@ use std::hash::Hash;
 use std::fmt;
 use std::ops::Index;
 use std::panic::panic_any;
+use std::fs::File;
+use std::io::{Write, BufReader, BufRead, Error, BufWriter};
 
 pub type Weight = usize;
 pub type Direction = usize; // направление вершины к вершине
@@ -286,7 +288,7 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
         if self.find_node(begin) && self.find_node(end) {
             let mut queue: HashMap<T, bool> = HashMap::new(); // наш список с пройденными вершинами
 
-            let mut jump_flag:bool = false; // флаг прыжка, нужен для проверки если ли у вершины сл потомки
+            let mut jump_flag: bool = false; // флаг прыжка, нужен для проверки если ли у вершины сл потомки
             let mut path = Vec::new(); // созда записывается пройденный путь (чтоб вернуться назад)
 
             let index = self.get_index_node(begin);
@@ -307,12 +309,11 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
                             return true;
                         }
                         jump_flag = true;
-                        println!("{}", neighbor.key);
                         break;
                     }
                 }
                 if jump_flag == false && path.len() != 0 { // если прыжка не было, значит потомком нет и нужно вернуться на прошлого потомка
-                    if path.len() == 1 { 
+                    if path.len() == 1 {
                         previous = path[0];
                     } else {
                         previous = path.pop().unwrap();
@@ -323,5 +324,35 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
             }
         }
         false
+    }
+
+    pub fn write_to_file(&self, path: &str) -> Result<(), Error> {
+        let mut output = File::create(path)?;
+
+        for node in self.list.iter() {
+            write!(output, "Graph: {}\nValue: {}\n", node.key, node.value).expect("Unable to write to file (Graph, value)!\n");
+            for rib in node.map.iter() {
+                write!(output, "map:\n{}\n", rib.0).expect("Unable to write to file (Map)!\n");
+                for (key, value) in rib.1 {
+                    write!(output, "Key: {}\nValue:{}\n", key, value).expect("Unable to write to file (Key, value)!\n");;
+                }
+            }
+            write!(output, "#\n");
+        }
+        Ok(())
+    }
+
+    pub fn read_from_file(&self, path: &str) -> Result<(), Error> {
+        let input = File::open(path).expect("Unable to open file!");
+        let buffer = BufReader::new(input);
+
+        for line in buffer.lines() {
+            if line.unwrap().find("Graph") {
+                println!("Нашел!");
+            } else {
+                Err(())
+            }
+        }
+        Ok(())
     }
 }

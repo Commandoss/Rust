@@ -1,0 +1,96 @@
+Graph: 6
+Value: Six
+map:
+32
+Key: 1
+Value:77
+map:
+2
+Key: 0
+Value:1
+#
+Graph: 5
+Value: Five
+map:
+2
+Key: 0
+Value:8
+#
+Graph: 0
+Value: Zero
+map:
+2
+Key: 1
+Value:13
+map:
+3
+Key: 1
+Value:22
+map:
+1
+Key: 1
+Value:2
+#
+Graph: 2
+Value: Second
+map:
+5
+Key: 1
+Value:8
+map:
+0
+Key: 0
+Value:13
+map:
+6
+Key: 1
+Value:1
+map:
+1
+Key: 0
+Value:12
+map:
+4
+Key: 1
+Value:42
+map:
+3
+Key: 0
+Value:52
+#
+Graph: 3
+Value: Third
+map:
+0
+Key: 0
+Value:22
+map:
+2
+Key: 1
+Value:52
+#
+Graph: 4
+Value: Four
+map:
+2
+Key: 0
+Value:42
+#
+Graph: 1
+Value: First
+map:
+0
+Key: 0
+Value:2
+map:
+2
+Key: 1
+Value:12
+#
+Graph: 32
+Value: Thirty two
+map:
+6
+Key: 0
+Value:77
+#
