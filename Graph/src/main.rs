@@ -31,6 +31,9 @@ fn main() {
     graph.set_rib_weight(32, 1, 55);
     graph.print_vertexs_direction();
 
+    graph.delete_oriented_rib(32, 1);
+    graph.print_vertexs_direction();
+
     graph.delete_graph();
     graph.print_vertex();
 }

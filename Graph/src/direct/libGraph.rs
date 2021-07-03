@@ -121,13 +121,28 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
         false
     }
 
-    // удаляет все врешины графа // нужно доработать !!!!
-    pub fn delete_graph(&mut self) {
+    // удаляет все врешины графа
+    pub fn delete_graph(&mut self) -> bool {
         self.list.clear();
+        self.list.is_empty()
     }
 
     // удаляет ориентированное ребро
-    pub fn delete_oriented_rib(&mut self, key: T) {}
+    pub fn delete_oriented_rib(&mut self, begin: T, end: T) -> bool {
+        if self.check_rib(begin, end) {
+            let vertex_one = self.get_index_node(begin);
+            let vertex_two = self.get_index_node(end);
+
+            self.list[vertex_one].map.remove(&end);
+            self.list[vertex_two].map.remove(&begin);
+
+            if self.list[vertex_one].map.get(&end) == None &&
+                self.list[vertex_two].map.get(&begin) == None {
+                return true
+            }
+        }
+        false
+    }
 
     // выводит на экран все вершины (ключ, содержимое)
     pub fn print_vertex(&self) {
