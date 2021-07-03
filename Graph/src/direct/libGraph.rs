@@ -2,16 +2,10 @@ use std::collections::HashMap;
 use std::hash::Hash;
 use std::fmt;
 use std::ops::Index;
-// use std::ptr::swap_nonoverlapping_one;
+use std::panic::panic_any;
 
-
-// pub type vertex = usize; // ключ вершины
 pub type Weight = usize;
-// вес вершины / растояние до сл
-// pub type key_next = usize; // ключ следующей вершины
-
 pub type Direction = usize; // направление вершины к вершине
-
 
 // Структура определения вершины
 pub struct Node<T, U> {
@@ -96,7 +90,7 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
         if self.check_rib(begin, end) {
             let index = self.get_index_node(begin);
             let weigth = self.list[index].map.get(&end).unwrap().values().last().unwrap();
-            return *weigth
+            return *weigth;
         }
         0
     }
@@ -106,12 +100,12 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
         if self.check_rib(begin, end) {
             let index = self.get_index_node(begin);
             let direct = self.list[index].map.get(&end).unwrap().keys().last().unwrap();
-            return *direct
+            return *direct;
         }
         0
     }
 
-    // удаляет вершину графа // нужно доработать связи с другими вершинами !!!!
+    // удаляет вершину графа // нужно доработать связи с другими вершинами !!!!///////////////////////////////!!!!!!!!
     pub fn delete_node(&mut self, key: T) -> bool {
         if self.find_node(key) {
             let a = self.get_index_node(key);
@@ -138,7 +132,7 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
 
             if self.list[vertex_one].map.get(&end) == None &&
                 self.list[vertex_two].map.get(&begin) == None {
-                return true
+                return true;
             }
         }
         false
@@ -283,6 +277,50 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
 
             &self.list[vertex_two].map.insert(begin, new_map);
             return true;
+        }
+        false
+    }
+
+    // обход графа в ширину
+    pub fn width_graph_traversal(&self, begin: T, end: T) -> bool {
+        if self.find_node(begin) && self.find_node(end) {
+            let mut queue: HashMap<T, bool> = HashMap::new(); // наш список с пройденными вершинами
+
+            let mut jump_flag:bool = false; // флаг прыжка, нужен для проверки если ли у вершины сл потомки
+            let mut path = Vec::new(); // созда записывается пройденный путь (чтоб вернуться назад)
+
+            let index = self.get_index_node(begin);
+            let mut previous = &self.list[index]; // стартовый элемент
+            queue.insert(previous.key, true); // добавляет в очередь пройденных
+            path.push(previous);
+
+            while queue.len() != self.list.len() {
+                for neighbor in self.list.iter() { // проверяем все вершины в нашем векторе
+                    if queue.get(&neighbor.key) != Some(&true)  // если его нет в списке
+                        && previous.map.get(&neighbor.key) != None // если он сосед нынешней вершины
+                        && self.get_direction_node(previous.key, neighbor.key) != 0 // если направление ребра ведет от текущей к сл а не наоборото
+                    {
+                        queue.insert(neighbor.key, true);  // добавляем в список что вершина была пройдена
+                        path.push(previous); // добавляем вершину в путь
+                        previous = neighbor; // теперь мы двигаемся с этой вершины
+                        if neighbor.key == end { // если заданный ключ и ключ вершины совпали то выход
+                            return true;
+                        }
+                        jump_flag = true;
+                        println!("{}", neighbor.key);
+                        break;
+                    }
+                }
+                if jump_flag == false && path.len() != 0 { // если прыжка не было, значит потомком нет и нужно вернуться на прошлого потомка
+                    if path.len() == 1 { 
+                        previous = path[0];
+                    } else {
+                        previous = path.pop().unwrap();
+                    }
+                } else {
+                    jump_flag = false;
+                }
+            }
         }
         false
     }
