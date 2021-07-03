@@ -28,6 +28,9 @@ fn main() {
     graph.change_direcrion_rib(1, 32, 0);
     graph.print_vertexs_direction();
 
+    graph.set_rib_weight(32, 1, 55);
+    graph.print_vertexs_direction();
+
     graph.delete_graph();
     graph.print_vertex();
 }

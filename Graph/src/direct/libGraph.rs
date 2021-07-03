@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::hash::Hash;
-
+use std::fmt;
+use std::ops::Index;
 // use std::ptr::swap_nonoverlapping_one;
 
 
@@ -94,9 +95,18 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
     fn get_weight_node(&self, begin: T, end: T) -> Weight {
         if self.check_rib(begin, end) {
             let index = self.get_index_node(begin);
-            for i in self.list[index].map.get(&begin).iter() {
-                return i[&0];
-            }
+            let weigth = self.list[index].map.get(&end).unwrap().values().last().unwrap();
+            return *weigth
+        }
+        0
+    }
+
+    // возвращает направление ребра
+    fn get_direction_node(&self, begin: T, end: T) -> Direction {
+        if self.check_rib(begin, end) {
+            let index = self.get_index_node(begin);
+            let direct = self.list[index].map.get(&end).unwrap().keys().last().unwrap();
+            return *direct
         }
         0
     }
@@ -117,9 +127,7 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
     }
 
     // удаляет ориентированное ребро
-    pub fn delete_oriented_rib(&mut self, key: T, ) {
-
-    }
+    pub fn delete_oriented_rib(&mut self, key: T) {}
 
     // выводит на экран все вершины (ключ, содержимое)
     pub fn print_vertex(&self) {
@@ -177,15 +185,22 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
         println!();
     }
 
-    // так же нужно проверять есть ли такое ребро
-    // указание веса для ребра
-    pub fn set_rib_weight(&self, begin: T, end: T, new_weigth: Weight) -> bool {
+    // указание нового веса для ребра
+    pub fn set_rib_weight(&mut self, begin: T, end: T, new_weight: Weight) -> bool {
         if self.check_rib(begin, end) {
             let vertex_one = self.get_index_node(begin);
             let vertex_two = self.get_index_node(end);
 
-            // &self.list[vertex_one].map.get();
-            // &self.list[vertex_two].map.get();
+            let old_direction = self.get_direction_node(begin, end);
+
+            let mut new_map: HashMap<Direction, Weight> = HashMap::new();
+            new_map.insert(old_direction, new_weight);
+            &self.list[vertex_one].map.insert(end, new_map);
+
+            let mut new_map: HashMap<Direction, Weight> = HashMap::new();
+            new_map.insert(old_direction, new_weight);
+
+            &self.list[vertex_two].map.insert(begin, new_map);
 
             return true;
         }
@@ -227,8 +242,8 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
             let vertex_one = self.get_index_node(begin);
             let vertex_two = self.get_index_node(end);
 
-            if self.list[vertex_one].map.contains_key(&end) == true && self.list[vertex_two].map.contains_key(&begin) == true{
-                return true
+            if self.list[vertex_one].map.contains_key(&end) == true && self.list[vertex_two].map.contains_key(&begin) == true {
+                return true;
             }
         }
         false
