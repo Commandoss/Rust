@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::hash::Hash;
+
 // use std::ptr::swap_nonoverlapping_one;
 
 
@@ -83,25 +84,41 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
     fn get_index_node(&self, find_key: T) -> usize {
         let mut counter = 0;
         for node in self.list.iter() {
-            if find_key == node.key { return counter }
+            if find_key == node.key { return counter; }
             counter += 1;
         };
         0
     }
 
-    // удаляет вершину графа
+    // возвращает вес ребра
+    fn get_weight_node(&self, begin: T, end: T) -> Weight {
+        if self.check_rib(begin, end) {
+            let index = self.get_index_node(begin);
+            for i in self.list[index].map.get(&begin).iter() {
+                return i[&0];
+            }
+        }
+        0
+    }
+
+    // удаляет вершину графа // нужно доработать связи с другими вершинами !!!!
     pub fn delete_node(&mut self, key: T) -> bool {
         if self.find_node(key) {
             let a = self.get_index_node(key);
             self.list.remove(a);
-            return true
+            return true;
         }
         false
     }
 
-    // удаляет все врешины графа
+    // удаляет все врешины графа // нужно доработать !!!!
     pub fn delete_graph(&mut self) {
         self.list.clear();
+    }
+
+    // удаляет ориентированное ребро
+    pub fn delete_oriented_rib(&mut self, key: T, ) {
+
     }
 
     // выводит на экран все вершины (ключ, содержимое)
@@ -109,24 +126,99 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
         if self.list.len() != 0 {
             println!("Graph vertices:");
             for node in self.list.iter() {
-                println!("Key vertex: {}. value: {}", node.key, node.value);
+                println!("Key vertex: {}, value: {}", node.key, node.value);
             }
         } else {
             println!("The graph contains no vertices.");
         }
+        println!();
+    }
+
+    // выводит на экран ребра вершины и ее значения
+    pub fn print_vertex_direction(&self, key: T) {
+        if self.find_node(key) {
+            let direct: Direction = 1;
+            let node = &self.list[self.get_index_node(key)];
+            println!("Key vertex: {}, value: {}", node.key, node.value);
+            for rib in node.map.iter() {
+                for g in rib.1 {
+                    if (g.0 == &direct) {
+                        println!("Key: {} -> key_next: {}, weigth: {}", node.key, rib.0, g.1);
+                    } else {
+                        println!("Key: {} <- key_next: {}, weigth: {}", node.key, rib.0, g.1);
+                    }
+                }
+            }
+        } else {
+            println!("Such a peak does not exist.");
+        }
+        println!();
+    }
+
+    // выводит на экран все
+    pub fn print_vertexs_direction(&self) {
+        if self.list.len() != 0 {
+            let direct: Direction = 1;
+            for node in self.list.iter() {
+                println!("\nKey vertex: {}, value: {}", node.key, node.value);
+                for rib in node.map.iter() {
+                    for g in rib.1 {
+                        if g.0 == &direct {
+                            println!("Key: {} -> key_next: {}, weigth: {}", node.key, rib.0, g.1);
+                        } else {
+                            println!("Key: {} <- key_next: {}, weigth: {}", node.key, rib.0, g.1);
+                        }
+                    }
+                }
+            }
+        } else {
+            println!("Such a peak does not exist.");
+        }
+        println!();
     }
 
     // так же нужно проверять есть ли такое ребро
     // указание веса для ребра
-    pub fn set_rib_weight(&self, new_weigth: Weight) {
+    pub fn set_rib_weight(&self, begin: T, end: T, new_weigth: Weight) -> bool {
+        if self.check_rib(begin, end) {
+            let vertex_one = self.get_index_node(begin);
+            let vertex_two = self.get_index_node(end);
 
+            // &self.list[vertex_one].map.get();
+            // &self.list[vertex_two].map.get();
+
+            return true;
+        }
+        false
     }
 
     // изменяет направление ребра
-    pub fn change_direcrion_rib(&self, begin: T, end: T) {
+    pub fn change_direcrion_rib(&mut self, begin: T, end: T, new_direction: Direction) -> bool {
         if self.check_rib(begin, end) {
+            let vertex_one = self.get_index_node(begin);
+            let vertex_two = self.get_index_node(end);
 
+            let old_weight = self.get_weight_node(begin, end);
+            let mut new_map: HashMap<Direction, Weight> = HashMap::new();
+            new_map.insert(new_direction, old_weight);
+
+            &self.list[vertex_one].map.insert(end, new_map);
+
+            let mut change_direction: Direction = new_direction;
+            if change_direction == 0 {
+                change_direction = 1;
+            } else {
+                change_direction = 0;
+            }
+
+            let mut new_map: HashMap<Direction, Weight> = HashMap::new();
+            new_map.insert(change_direction, old_weight);
+
+            &self.list[vertex_two].map.insert(begin, new_map);
+
+            return true;
         }
+        false
     }
 
     // проверяет существует ли такое ребро
@@ -135,10 +227,9 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
             let vertex_one = self.get_index_node(begin);
             let vertex_two = self.get_index_node(end);
 
-            let a = &self.list[vertex_one].map.get(&begin);
-
-
-            true
+            if self.list[vertex_one].map.contains_key(&end) == true && self.list[vertex_two].map.contains_key(&begin) == true{
+                return true
+            }
         }
         false
     }
@@ -146,12 +237,10 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
     // создание оринтированного ребра
     pub fn add_oriented_rib(&mut self, begin: T, end: T, new_weigth: Weight) -> bool {
         if self.check_rib(begin, end) {
-            return false
-        }
-        else if self.find_node(begin) && self.find_node(end) {
+            return false;
+        } else if self.find_node(begin) && self.find_node(end) {
             let vertex_one = self.get_index_node(begin);
             let vertex_two = self.get_index_node(end);
-
             let vertex_direct: Direction = 1;
             let mut new_map: HashMap<Direction, Weight> = HashMap::new();
             new_map.insert(vertex_direct, new_weigth);
@@ -162,8 +251,8 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
             let mut new_map: HashMap<Direction, Weight> = HashMap::new();
             new_map.insert(vertex_direct, new_weigth);
 
-            &self.list[vertex_one].map.insert(begin, new_map);
-            return true
+            &self.list[vertex_two].map.insert(begin, new_map);
+            return true;
         }
         false
     }
