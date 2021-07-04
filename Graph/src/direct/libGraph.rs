@@ -5,6 +5,10 @@ use std::ops::Index;
 use std::panic::panic_any;
 use std::fs::File;
 use std::io::{Write, BufReader, BufRead, Error, BufWriter};
+use std::fmt::Debug;
+use core::marker::Sized;
+use std::collections::hash_map::Keys;
+use std::convert::TryFrom;
 
 pub type Weight = usize;
 pub type Direction = usize; // направление вершины к вершине
@@ -38,6 +42,12 @@ impl<T, U> Node<T, U> {
 pub struct Graph<T, U> {
     list: Vec<Node<T, U>>,
 }
+
+// pub trait Convert_type {
+//     pub fn from_T() {
+//
+//     }
+// }
 
 impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display + Copy + PartialOrd> Graph<T, U> {
     // создание пустого графа
@@ -110,8 +120,12 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
     // удаляет вершину графа // нужно доработать связи с другими вершинами !!!!///////////////////////////////!!!!!!!!
     pub fn delete_node(&mut self, key: T) -> bool {
         if self.find_node(key) {
-            let a = self.get_index_node(key);
-            self.list.remove(a);
+            let vertex = self.get_index_node(key);
+            let keys = self.list[vertex].map.clone();
+            for (i, j) in keys {
+                self.delete_oriented_rib(key, i);
+            }
+            self.list.remove(vertex);
             return true;
         }
         false
@@ -284,43 +298,42 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
     }
 
     // обход графа в ширину
-    pub fn width_graph_traversal(&self, begin: T, end: T) -> bool {
+    pub fn width_graph_traversal(&self, begin: T, end: T) -> bool { // тут нужна доработка
         if self.find_node(begin) && self.find_node(end) {
-            let mut queue: HashMap<T, bool> = HashMap::new(); // наш список с пройденными вершинами
+            let mut list: HashMap<T, bool> = HashMap::new(); // наш список с пройденными вершинами
+            let mut path = Vec::new(); // сюда записывается пройденный путь (чтоб вернуться назад)
 
-            let mut jump_flag: bool = false; // флаг прыжка, нужен для проверки если ли у вершины сл потомки
-            let mut path = Vec::new(); // созда записывается пройденный путь (чтоб вернуться назад)
+            let mut jump_flag:bool = false;
 
             let index = self.get_index_node(begin);
-            let mut previous = &self.list[index]; // стартовый элемент
-            queue.insert(previous.key, true); // добавляет в очередь пройденных
-            path.push(previous);
+            let mut current = &self.list[index]; // стартовый элемент
+            list.insert(current.key, true); // добавляет в очередь пройденных
 
-            while queue.len() != self.list.len() {
-                for neighbor in self.list.iter() { // проверяем все вершины в нашем векторе
-                    if queue.get(&neighbor.key) != Some(&true)  // если его нет в списке
-                        && previous.map.get(&neighbor.key) != None // если он сосед нынешней вершины
-                        && self.get_direction_node(previous.key, neighbor.key) != 0 // если направление ребра ведет от текущей к сл а не наоборото
+            while list.len() != self.list.len() {
+                jump_flag = false;
+                for next in self.list.iter() { // проверяем все вершины в нашем векторе
+                    if list.get(&next.key) != Some(&true)  // если его нет в списке
+                        && current.map.get(&next.key) != None // если он сосед нынешней вершины
+                        && self.get_direction_node(current.key, next.key) != 0 // если направление ребра ведет от текущей к сл а не наоборото
                     {
-                        queue.insert(neighbor.key, true);  // добавляем в список что вершина была пройдена
-                        path.push(previous); // добавляем вершину в путь
-                        previous = neighbor; // теперь мы двигаемся с этой вершины
-                        if neighbor.key == end { // если заданный ключ и ключ вершины совпали то выход
+                        list.insert(next.key, true);  // добавляем в список что вершина была пройдена
+                        path.push(current); // добавляем вершину в путь
+                        current = next; // теперь мы двигаемся с этой вершины
+                        if next.key == end { // если заданный ключ и ключ вершины совпали то выход
                             return true;
                         }
                         jump_flag = true;
                         break;
                     }
                 }
-                if jump_flag == false && path.len() != 0 { // если прыжка не было, значит потомком нет и нужно вернуться на прошлого потомка
-                    if path.len() == 1 {
-                        previous = path[0];
-                    } else {
-                        previous = path.pop().unwrap();
-                    }
-                } else {
-                    jump_flag = false;
+                // если прыжка не было, значит потомком нет и нужно вернуться на прошлого потомка
+                if (jump_flag == true) {
+                    continue
                 }
+                if (path.len() == 0) {
+                    return false
+                }
+                current = path.pop().unwrap();
             }
         }
         false
@@ -330,28 +343,50 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
         let mut output = File::create(path)?;
 
         for node in self.list.iter() {
+            write!(output, "#\n");
             write!(output, "Graph: {}\nValue: {}\n", node.key, node.value).expect("Unable to write to file (Graph, value)!\n");
             for rib in node.map.iter() {
-                write!(output, "map:\n{}\n", rib.0).expect("Unable to write to file (Map)!\n");
+                write!(output, "Map: {}\n", rib.0).expect("Unable to write to file (Map)!\n");
                 for (key, value) in rib.1 {
-                    write!(output, "Key: {}\nValue:{}\n", key, value).expect("Unable to write to file (Key, value)!\n");;
+                    write!(output, "Direction: {}\nWeight:{}\n", key, value).expect("Unable to write to file (Key, value)!\n");
+                    ;
                 }
             }
-            write!(output, "#\n");
         }
+        write!(output, "End.");
         Ok(())
     }
 
-    pub fn read_from_file(&self, path: &str) -> Result<(), Error> {
+    pub fn read_from_file(&mut self, path: &str) -> Result<(), Error> {
         let input = File::open(path).expect("Unable to open file!");
-        let buffer = BufReader::new(input);
+        let mut buffer = BufReader::new(input);
+        let mut line = &mut "".to_string();
+
+        let mut value: U;
+        let mut key: T;
 
         for line in buffer.lines() {
-            if line.unwrap().find("Graph") {
-                println!("Нашел!");
-            } else {
-                Err(())
-            }
+            // if vec_str[0] != "#" {
+            //     break;
+            // }
+            // else if vec_str[0] != "Graph:" {
+            //     let value: T = From::from(vec_str[0]) ;
+            //     continue;
+            // }
+            // else if vec_str[0] != "Value:" {
+            // }
+            // else if vec_str[0] != "Map:" {
+            //
+            // }
+            // else if vec_str[0] != "Direction:" {
+            //
+            // }
+            // else if vec_str[0] != "Weight:" {
+            //
+            // }
+            // else if vec_str[0] != "End." {
+            //
+            // }
         }
         Ok(())
     }

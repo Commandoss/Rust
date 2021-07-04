@@ -34,7 +34,11 @@ fn main()  {
     graph.add_oriented_rib(6, 32, 77);
     graph.print_vertexs_direction();
 
-    // println!("{}", graph.width_graph_traversal(32, 0));
+    println!("{}", graph.width_graph_traversal(32, 0));
+
+    graph.delete_node(2);
+    graph.print_vertexs_direction();
+
     let path: &str = "lines.txt";
     graph.write_to_file(path);
     graph.read_from_file(path);
