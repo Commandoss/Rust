@@ -11,17 +11,30 @@ use std::collections::hash_map::Keys;
 use std::convert::TryFrom;
 
 pub type Weight = usize;
-pub type Direction = usize; // направление вершины к вершине
+pub type Direction = usize;
 
-// Структура определения вершины
+
+/// Эта структура представляет вершину графа
+/// map: принимает параметры T - ключ следующей вершины с которой есть ребро
+///      HashMap<Direction, Weight> - контейнер описывающий связь
+///      Direction - направление ориетированного ребра
+///      Weight - вес ребра
+///
+/// key: ключ данной вершины
+/// value: то что хранит вершины
 pub struct Node<T, U> {
     map: HashMap<T, HashMap<Direction, Weight>>,
     key: T,
     value: U,
 }
 
-// создание структуры
+/// Функции для работы с Node<T, U>
 impl<T, U> Node<T, U> {
+
+    /// fn new_node - данная функция зодает новую вершину с заданными праметрами
+    ///     new_key - новый ключ вершины
+    ///     new_value - новое значение вершины
+    /// Возврашаемое значение это созданная структура
     pub fn new_node(new_key: T, new_value: U) -> Node<T, U> {
         Node {
             map: HashMap::new(),
@@ -30,6 +43,11 @@ impl<T, U> Node<T, U> {
         }
     }
 
+    /// fn set_node - данная функция служит для создания вершины с ориентированными ребрами
+    ///     new_key - новый ключ вершины
+    ///     new_value - новое значение вершины
+    ///     new_map - контейнер с описанием для создания ориентированных ребер
+    /// Возврашаемое значение это созданная структура
     pub fn set_node(new_key: T, new_value: U, new_map: HashMap<T, HashMap<Direction, Weight>>) -> Node<T, U> {
         Node {
             map: new_map,
@@ -39,6 +57,11 @@ impl<T, U> Node<T, U> {
     }
 }
 
+/// Эта структура представляет граф
+/// list: это вектор вершин графа
+///     Node - структура описывающая вершину
+///     T - обощенный тип представляюший ключ верщины
+///     U - обобщенный тип представляющий хранимое значение вершины
 pub struct Graph<T, U> {
     list: Vec<Node<T, U>>,
 }
@@ -49,15 +72,19 @@ pub struct Graph<T, U> {
 //     }
 // }
 
+/// Функции для работы с Graph<T, U>
 impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: Hash + Eq + PartialOrd + Copy + std::fmt::Display> Graph<T, U> {
-    // создание пустого графа
+    /// fn new() - данная функция создает струтуру с пустыми значениями
+    /// Возвращаемое значения струтура Graph<T, U>
     pub fn new() -> Self {
         Graph {
             list: Vec::new()
         }
     }
 
-    // создание нескольких вершин графа
+    /// fn create - данная функия создает граф с заданными значениями
+    ///     value - контейнер для создания новых вершин
+    /// Возвращаемое значение струтура Graph<T, U>
     pub fn create_graph(value: HashMap<T, U>) -> Self {
         let mut new_graph: Graph<T, U> = Graph::new();
         new_graph.list.clear();
@@ -69,7 +96,17 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: Hash + Eq + Partia
         new_graph
     }
 
-    // добавление вершины
+    /// fn add_node - данная функция добавляет вершину в граф создавая ее
+    ///     key - ключ добавляемое вершины
+    ///     value - хранимое значения в верщине
+    ///     &mut self - ссылка на структуру которая вызывает данную функцию
+    ///
+    /// Условия корректной работы:
+    ///     ключ передаваемый в функцию должен быть уникальным, т.е. создаваемая
+    /// веришна не может быть с одинаковыми ключами которые уже были созданны
+    /// 
+    /// Возвращаемое значение тип bool, при корректной работе вернет true,
+    /// при невыполнении условий вернет false
     pub fn add_node(&mut self, key: T, value: U) -> bool {
         if !self.find_node(key) {
             let new_node = Node::new_node(key, value);
