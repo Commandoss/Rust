@@ -14,10 +14,11 @@ pub type Weight = usize;
 pub type Direction = usize;
 
 // Косяк #1
-// Была допущена ошибка и выяснилась она только в конце
-// Я использовал в struct Node<T, U> в параметре map: Hashmap<T, ..> в качестве ключа
-// обобщенное T и на тот момент я не знал что в языке rust нельзя использовать f32/f64 в качестве ключа в hashmap))))))
-// Как-то так) Как пишут на форумах исправить это никак нельзя поэтому тут под замену половина кода.
+// Была допущена ошибка и выяснилась она только в конце...
+// Я использовал в struct Node<T, U> в параметре map: Hashmap<T, ..> в качестве ключа обобщенное T
+// и на тот момент я не знал что в языке rust нельзя использовать f32/f64 в качестве ключа в hashmap))))))
+// Как-то так)
+// Как пишут на форумах исправить это никак нельзя поэтому тут под замену половина кода.
 
 
 /// Эта структура представляет вершину графа
@@ -223,7 +224,7 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
     ///     Ребро должно существоать.
     /// Возвращаемое значение типа bool:
     ///     true - ребро было удалено
-    ///     false - условия небыли выполнены
+    ///     false - условия не были выполнены
     pub fn delete_oriented_rib(&mut self, begin: T, end: T) -> bool {
         if self.check_rib(begin, end) {
             let vertex_one = self.get_index_node(begin);
@@ -322,7 +323,7 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
     ///     Ребро должно существоать.
     /// Возвращаемое значение типа bool:
     ///     true - функция успешно выполнена
-    ///     false - условия небыли выполнены
+    ///     false - условия не были выполнены
     pub fn set_rib_weight(&mut self, begin: T, end: T, new_weight: Weight) -> bool {
         if self.check_rib(begin, end) {
             let vertex_one = self.get_index_node(begin);
@@ -354,7 +355,7 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
     ///     Ребро должно существоать.
     /// Возвращаемое значение типа bool:
     ///     true - функция успешно выполнена
-    ///     false - условия небыли выполнены
+    ///     false - условия не были выполнены
     pub fn change_direcrion_rib(&mut self, begin: T, end: T, new_direction: Direction) -> bool {
         if self.check_rib(begin, end) {
             let vertex_one = self.get_index_node(begin);
