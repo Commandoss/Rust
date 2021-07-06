@@ -4,6 +4,7 @@ use Graph::direct::libGraph;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{Write, BufReader, BufRead, Error};
+use Graph::test::cfg;
 
 fn create_new_vertex() -> HashMap<i32, &'static str> {
     let mut hs = HashMap::new();

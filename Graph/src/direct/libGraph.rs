@@ -43,8 +43,8 @@ pub struct Graph<T, U> {
     list: Vec<Node<T, U>>,
 }
 
-// pub trait Convert_type {
-//     pub fn from_T() {
+// pub trait Converter  {
+//     fn adasd() -> T {
 //
 //     }
 // }
@@ -360,34 +360,30 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
     pub fn read_from_file(&mut self, path: &str) -> Result<(), Error> {
         let input = File::open(path).expect("Unable to open file!");
         let mut buffer = BufReader::new(input);
-        let mut line = &mut "".to_string();
 
-        let mut value: U;
-        let mut key: T;
+        // let mut new_node;
+        // let mut key: T;
+        // let mut value: U;
 
-        for line in buffer.lines() {
-            // if vec_str[0] != "#" {
-            //     break;
+        // for line in buffer.lines() {
+            // let unwarp_line = line.as_ref().unwrap().split(' ').collect::<Vec<&str>>();
+            //     if unwarp_line[0] == "Graph:" {
+            //         key = unwarp_line[1];
+            //         break;
+            //     } else if unwarp_line[0] == "Value:" {
+            //         value = unwarp_line[1] as U;
+            //         new_node = Node::new_node(key, value);
+            //         self.list.push(new_node);
+            //         break;
+            //     } else if unwarp_line[0] == "Map:" {
+            //         break;
+            //     } else if unwarp_line[0] == "Direction:"{
+            //         break;
+            //     } else if unwarp_line[0] =="Weight:" {
+            //         break;
+            //     }
             // }
-            // else if vec_str[0] != "Graph:" {
-            //     let value: T = From::from(vec_str[0]) ;
-            //     continue;
-            // }
-            // else if vec_str[0] != "Value:" {
-            // }
-            // else if vec_str[0] != "Map:" {
-            //
-            // }
-            // else if vec_str[0] != "Direction:" {
-            //
-            // }
-            // else if vec_str[0] != "Weight:" {
-            //
-            // }
-            // else if vec_str[0] != "End." {
-            //
-            // }
-        }
+        // }
         Ok(())
     }
 }
