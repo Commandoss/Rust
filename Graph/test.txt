@@ -1,0 +1,52 @@
+#
+Graph: 1
+Value: one
+Map: 2
+Direction: 1
+Weight:23
+Map: 1
+Direction: 0
+Weight:23
+Map: 3
+Direction: 1
+Weight:23
+Map: 4
+Direction: 1
+Weight:23
+#
+Graph: 2
+Value: two
+Map: 1
+Direction: 0
+Weight:23
+#
+Graph: 3
+Value: three
+Map: 1
+Direction: 0
+Weight:23
+#
+Graph: 4
+Value: four
+Map: 5
+Direction: 1
+Weight:23
+Map: 1
+Direction: 0
+Weight:23
+#
+Graph: 5
+Value: five
+Map: 6
+Direction: 1
+Weight:23
+Map: 4
+Direction: 0
+Weight:23
+#
+Graph: 6
+Value: six
+Map: 5
+Direction: 0
+Weight:23
+End.

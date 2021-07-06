@@ -49,7 +49,7 @@ pub struct Graph<T, U> {
 //     }
 // }
 
-impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display + Copy + PartialOrd> Graph<T, U> {
+impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: Hash + Eq + PartialOrd + Copy + std::fmt::Display> Graph<T, U> {
     // создание пустого графа
     pub fn new() -> Self {
         Graph {
@@ -117,7 +117,7 @@ impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: std::fmt::Display 
         0
     }
 
-    // удаляет вершину графа // нужно доработать связи с другими вершинами !!!!///////////////////////////////!!!!!!!!
+    // удаляет вершину графа
     pub fn delete_node(&mut self, key: T) -> bool {
         if self.find_node(key) {
             let vertex = self.get_index_node(key);
