@@ -1,36 +1,36 @@
 #
-Graph: 3
-Value: Third
-Map: 0
-Direction: 0
-Weight:22
-#
 Graph: 6
 Value: Six
 Map: 32
 Direction: 1
 Weight:77
 #
+Graph: 3
+Value: Third
+Map: 0
+Direction: 0
+Weight:22
+#
 Graph: 0
 Value: Zero
-Map: 1
-Direction: 1
-Weight:2
 Map: 3
 Direction: 1
 Weight:22
+Map: 1
+Direction: 1
+Weight:2
 #
 Graph: 5
 Value: Five
+#
+Graph: 4
+Value: Four
 #
 Graph: 1
 Value: First
 Map: 0
 Direction: 0
 Weight:2
-#
-Graph: 4
-Value: Four
 #
 Graph: 32
 Value: Thirty two

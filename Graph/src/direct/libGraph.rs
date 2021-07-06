@@ -13,6 +13,12 @@ use std::convert::TryFrom;
 pub type Weight = usize;
 pub type Direction = usize;
 
+// Косяк #1
+// Была допущена ошибка и выяснилась она только в конце
+// Я использовал в struct Node<T, U> в параметре map: Hashmap<T, ..> в качестве ключа
+// обобщенное T и на тот момент я не знал что в языке rust нельзя использовать f32/f64 в качестве ключа в hashmap))))))
+// Как-то так) Как пишут на форумах исправить это никак нельзя поэтому тут под замену половина кода.
+
 
 /// Эта структура представляет вершину графа
 /// map: принимает параметры T - ключ следующей вершины с которой есть ребро
@@ -22,6 +28,7 @@ pub type Direction = usize;
 ///
 /// key: ключ данной вершины
 /// value: то что хранит вершины
+// #[derive(Hash, Eq, PartialEq)]
 pub struct Node<T, U> {
     map: HashMap<T, HashMap<Direction, Weight>>,
     key: T,
@@ -68,14 +75,9 @@ pub struct Graph<T, U> {
     list: Vec<Node<T, U>>,
 }
 
-// pub trait Converter  {
-//     fn adasd() -> T {
-//
-//     }
-// }
 
 /// Функции для работы с Graph<T, U>
-impl<T: Hash + Eq + PartialOrd + Copy + std::fmt::Display, U: Hash + Eq + PartialOrd + Copy + std::fmt::Display> Graph<T, U> {
+impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash + Eq + PartialEq  + PartialOrd + Copy + std::fmt::Display> Graph<T, U> {
     /// fn new() - данная функция создает струтуру с пустыми значениями
     /// Возвращаемое значения струтура Graph<T, U>
     pub fn new() -> Self {

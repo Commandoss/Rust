@@ -20,6 +20,8 @@ fn create_new_vertex() -> HashMap<i32, &'static str> {
 }
 
 fn main()  {
+    let mut a: HashMap<&str, f32> = HashMap::new();
+    a.insert("dfdsf" ,32.5);
     let mut graph = libGraph::Graph::create_graph( create_new_vertex());
     graph.add_node(32, "Thirty two");
     graph.delete_node(7);

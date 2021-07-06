@@ -35,17 +35,18 @@ mod tests {
         check_graph.delete_graph();
     }
 
-    // #[test]
-    // fn create_graph_f32_str() {
-    //     let mut check_graph: Graph<f64, &str> = Graph::new();
-    //     check_graph.add_node(1.22, "one");
-    //     // check_graph.add_node(2.32, "two");
-    //     // check_graph.add_node(13.0, "three");
-    //     // check_graph.add_node(41.3, "four");
-    //     // check_graph.add_node(5555.006, "five");
-    //     // check_graph.add_node(61231.555, "six");
-    //     check_graph.delete_graph();
-    // }
+    #[test]
+    fn create_graph_f32_str() {
+        let mut check_graph: Graph<f64, &str> = Graph::new();
+        // check_graph
+        // check_graph.add_node(21.22, "one");
+        // check_graph.add_node(2.32, "two");
+        // check_graph.add_node(13.0, "three");
+        // check_graph.add_node(41.3, "four");
+        // check_graph.add_node(5555.006, "five");
+        // check_graph.add_node(61231.555, "six");
+        // check_graph.delete_graph();
+    }
 
     #[test]
     fn add_oriented_rib() {
