@@ -1,40 +1,40 @@
 #
-Graph: 6
-Value: Six
-Map: 32
-Direction: 1
-Weight:77
-#
-Graph: 3
-Value: Third
-Map: 0
-Direction: 0
-Weight:22
-#
 Graph: 0
-Value: Zero
-Map: 3
-Direction: 1
-Weight:22
+Value: g
 Map: 1
 Direction: 1
-Weight:2
+Weight: 2
+Map: 3
+Direction: 1
+Weight: 22
 #
-Graph: 5
-Value: Five
+Graph: 6
+Value: S
+Map: 32
+Direction: 1
+Weight: 77
 #
-Graph: 4
-Value: Four
-#
-Graph: 1
-Value: First
+Graph: 3
+Value: T
 Map: 0
 Direction: 0
-Weight:2
+Weight: 22
+#
+Graph: 5
+Value: F
+#
+Graph: 4
+Value: F
+#
+Graph: 1
+Value: F
+Map: 0
+Direction: 0
+Weight: 2
 #
 Graph: 32
-Value: Thirty two
+Value: 3
 Map: 6
 Direction: 0
-Weight:77
+Weight: 77
 End.

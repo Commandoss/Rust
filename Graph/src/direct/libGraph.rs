@@ -4,11 +4,16 @@ use std::fmt;
 use std::ops::Index;
 use std::panic::panic_any;
 use std::fs::File;
-use std::io::{Write, BufReader, BufRead, Error, BufWriter};
+use std::io::{Write, BufReader, BufRead, Error, BufWriter, empty};
 use std::fmt::Debug;
 use core::marker::Sized;
 use std::collections::hash_map::Keys;
-use std::convert::TryFrom;
+use std::convert::{TryFrom, TryInto};
+use std::ptr::null;
+use core::num::FpCategory::Nan;
+use std::any::{Any, TypeId};
+use std::str::{FromStr, ParseBoolError};
+use std::char::ParseCharError;
 
 pub type Weight = usize;
 pub type Direction = usize;
@@ -19,7 +24,6 @@ pub type Direction = usize;
 // и на тот момент я не знал что в языке rust нельзя использовать f32/f64 в качестве ключа в hashmap))))))
 // Как-то так)
 // Как пишут на форумах исправить это никак нельзя поэтому тут под замену половина кода.
-
 
 /// Эта структура представляет вершину графа
 /// map: принимает параметры T - ключ следующей вершины с которой есть ребро
@@ -37,7 +41,16 @@ pub struct Node<T, U> {
 }
 
 /// Функции для работы с Node<T, U>
-impl<T, U> Node<T, U> {
+impl<T: Default, U: Default> Node<T, U> {
+    /// fn new() - данная функция создает струтуру с пустыми значениями
+    /// Возвращаемое значения струтура Node<T, U>
+    pub fn new() -> Node<T, U> {
+        Node {
+            map: HashMap::new(),
+            key: Default::default(),
+            value: Default::default(),
+        }
+    }
 
     /// fn new_node - данная функция зодает новую вершину с заданными праметрами
     /// Принимаемые значения:
@@ -73,12 +86,13 @@ impl<T, U> Node<T, U> {
 ///     T - обощенный тип представляюший ключ верщины
 ///     U - обобщенный тип представляющий хранимое значение вершины
 pub struct Graph<T, U> {
-    list: Vec<Node<T, U>>,
+    pub list: Vec<Node<T, U>>,
 }
 
 
 /// Функции для работы с Graph<T, U>
-impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash + Eq + PartialEq  + PartialOrd + Copy + std::fmt::Display> Graph<T, U> {
+impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display + Default + FromStr,
+    U: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display + Default + FromStr> Graph<T, U> {
     /// fn new() - данная функция создает струтуру с пустыми значениями
     /// Возвращаемое значения струтура Graph<T, U>
     pub fn new() -> Self {
@@ -93,10 +107,10 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
     /// Возвращаемое значение струтура Graph<T, U>
     pub fn create_graph(value: HashMap<T, U>) -> Self {
         let mut new_graph: Graph<T, U> = Graph::new();
-        new_graph.list.clear();
-
         for (key, val) in value {
-            let new_node: Node<T, U> = Node::new_node(key, val);
+            let mut new_node = Node::new();
+            new_node.key = key.clone();
+            new_node.value = val.clone();
             new_graph.list.push(new_node);
         }
         new_graph
@@ -308,7 +322,7 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
                 }
             }
         } else {
-            println!("Such a peak does not exist.");
+            println!("Such a peak does not exist!");
         }
         println!();
     }
@@ -456,7 +470,7 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
             let mut list: HashMap<T, bool> = HashMap::new(); // наш список с пройденными вершинами
             let mut path = Vec::new(); // сюда записывается пройденный путь (чтоб вернуться назад)
 
-            let mut jump_flag:bool = false;
+            let mut jump_flag: bool = false;
 
             let index = self.get_index_node(begin);
             let mut current = &self.list[index]; // стартовый элемент
@@ -481,10 +495,10 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
                 }
                 // если прыжка не было, значит потомком нет и нужно вернуться на прошлого потомка
                 if (jump_flag == true) {
-                    continue
+                    continue;
                 }
                 if (path.len() == 0) {
-                    return false
+                    return false;
                 }
                 current = path.pop().unwrap();
             }
@@ -507,8 +521,7 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
             for rib in node.map.iter() {
                 write!(output, "Map: {}\n", rib.0).expect("Unable to write to file (Map)!\n");
                 for (key, value) in rib.1 {
-                    write!(output, "Direction: {}\nWeight:{}\n", key, value).expect("Unable to write to file (Key, value)!\n");
-                    ;
+                    write!(output, "Direction: {}\nWeight: {}\n", key, value).expect("Unable to write to file (Key, value)!\n");;
                 }
             }
         }
@@ -522,33 +535,42 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display, U: Hash +
     /// Возвращаемое значение:
     ///     Ok() - функция успешно отработала
     ///     Error() - ошибка с описанием
-    pub fn read_from_file(&mut self, path: &str) -> Result<(), Error> {
+    pub fn read_from_file(&mut self, path: &str) -> Result<(), Error>  where <T as FromStr>::Err: Debug, <U as FromStr>::Err: Debug {
         let input = File::open(path).expect("Unable to open file!");
         let mut buffer = BufReader::new(input);
 
-        // let mut new_node;
-        // let mut key: T;
-        // let mut value: U;
+        let mut new_node: Node<T, U> = Node::new();
+        let mut next_key: T = Default::default();
+        let mut directrion: Direction = 0;
+        let mut weigth: Weight = 0;
 
-        // for line in buffer.lines() {
-            // let unwarp_line = line.as_ref().unwrap().split(' ').collect::<Vec<&str>>();
-            //     if unwarp_line[0] == "Graph:" {
-            //         key = unwarp_line[1];
-            //         break;
-            //     } else if unwarp_line[0] == "Value:" {
-            //         value = unwarp_line[1] as U;
-            //         new_node = Node::new_node(key, value);
-            //         self.list.push(new_node);
-            //         break;
-            //     } else if unwarp_line[0] == "Map:" {
-            //         break;
-            //     } else if unwarp_line[0] == "Direction:"{
-            //         break;
-            //     } else if unwarp_line[0] =="Weight:" {
-            //         break;
-            //     }
-            // }
-        // }
+        for line in buffer.lines() {
+            let mut split_line = line.as_ref().clone().unwrap().split_whitespace().collect::<Vec<&str>>();
+            if split_line[0] == "End." {
+                break;
+            } else if split_line[0] == "#" {
+                if new_node.map.len() != 0 {
+                    self.list.push(new_node);
+                }
+                new_node = Node::new();
+            } else if split_line[0] == "Graph:" {
+                new_node.key = split_line[1].trim().parse::<T>().unwrap_or_default();
+            } else if split_line[0] == "Value:" {
+                new_node.value = split_line[1].trim().parse::<U>().unwrap_or_default();
+            } else if split_line[0] == "Map:" {
+                next_key = split_line[1].trim().parse::<T>().unwrap_or_default();
+            } else if split_line[0] == "Direction:" {
+                directrion = split_line[1].trim().parse::<Direction>().unwrap_or_default();
+            } else if split_line[0] == "Weight:" {
+                weigth = split_line[1].trim().parse::<Weight>().unwrap_or_default();
+                new_node.map.insert(next_key, [(directrion, weigth)].iter().cloned().collect());
+            }
+        }
+
         Ok(())
     }
 }
+
+
+
+

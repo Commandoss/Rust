@@ -5,25 +5,25 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{Write, BufReader, BufRead, Error};
 use Graph::test::cfg;
+use std::cmp::Ordering::Greater;
 
-fn create_new_vertex() -> HashMap<i32, &'static str> {
+fn create_new_vertex() -> HashMap<i32, char> {
     let mut hs = HashMap::new();
-    hs.insert(0, "Zero");
-    hs.insert(1, "First");
-    hs.insert(2, "Second");
-    hs.insert(3, "Third");
-    hs.insert(4, "Four");
-    hs.insert(5, "Five");
-    hs.insert(6, "Six");
-    hs.insert(7, "Seven");
+    hs.insert(0, 'g');
+    hs.insert(1, 'F');
+    hs.insert(2, 'S');
+    hs.insert(3, 'T');
+    hs.insert(4, 'F');
+    hs.insert(5, 'F');
+    hs.insert(6, 'S');
+    hs.insert(7, 'S');
     hs
 }
 
 fn main()  {
-    let mut a: HashMap<&str, f32> = HashMap::new();
-    a.insert("dfdsf" ,32.5);
-    let mut graph = libGraph::Graph::create_graph( create_new_vertex());
-    graph.add_node(32, "Thirty two");
+
+    let mut graph = libGraph::Graph::create_graph(create_new_vertex());
+    graph.add_node(32, '3');
     graph.delete_node(7);
 
     graph.add_oriented_rib(0, 1, 2);
@@ -44,11 +44,12 @@ fn main()  {
 
     let path: &str = "lines.txt";
     graph.write_to_file(path);
+    graph.delete_graph();
+    graph.print_vertexs_direction();
+
     graph.read_from_file(path);
+    graph.print_vertexs_direction();
 
     graph.delete_graph();
-    graph.print_vertex();
-
-
 
 }
