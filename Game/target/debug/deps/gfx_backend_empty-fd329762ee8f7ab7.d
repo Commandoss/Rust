@@ -1,0 +1,11 @@
+/Users/ilya/Projects/Rust/Game/target/debug/deps/gfx_backend_empty-fd329762ee8f7ab7.rmeta: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/buffer.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/descriptor.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/image.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/memory.rs
+
+/Users/ilya/Projects/Rust/Game/target/debug/deps/libgfx_backend_empty-fd329762ee8f7ab7.rlib: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/buffer.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/descriptor.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/image.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/memory.rs
+
+/Users/ilya/Projects/Rust/Game/target/debug/deps/gfx_backend_empty-fd329762ee8f7ab7.d: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/buffer.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/descriptor.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/image.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/memory.rs
+
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/lib.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/buffer.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/descriptor.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/image.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/gfx-backend-empty-0.7.0/src/memory.rs:

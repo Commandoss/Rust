@@ -1,27 +1,15 @@
 #
+Graph: 5
+Value: F
+#
 Graph: 0
 Value: g
-Map: 1
-Direction: 1
-Weight: 2
 Map: 3
 Direction: 1
 Weight: 22
-#
-Graph: 6
-Value: S
-Map: 32
+Map: 1
 Direction: 1
-Weight: 77
-#
-Graph: 3
-Value: T
-Map: 0
-Direction: 0
-Weight: 22
-#
-Graph: 5
-Value: F
+Weight: 2
 #
 Graph: 4
 Value: F
@@ -31,6 +19,18 @@ Value: F
 Map: 0
 Direction: 0
 Weight: 2
+#
+Graph: 3
+Value: T
+Map: 0
+Direction: 0
+Weight: 22
+#
+Graph: 6
+Value: S
+Map: 32
+Direction: 1
+Weight: 77
 #
 Graph: 32
 Value: 3

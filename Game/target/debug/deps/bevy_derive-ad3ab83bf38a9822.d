@@ -1,0 +1,13 @@
+/Users/ilya/Projects/Rust/Game/target/debug/deps/libbevy_derive-ad3ab83bf38a9822.dylib: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/app_plugin.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/bevy_main.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/bytes.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/modules.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/render_resource.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/render_resources.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/resource.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/shader_defs.rs
+
+/Users/ilya/Projects/Rust/Game/target/debug/deps/bevy_derive-ad3ab83bf38a9822.d: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/app_plugin.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/bevy_main.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/bytes.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/modules.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/render_resource.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/render_resources.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/resource.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/shader_defs.rs
+
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/lib.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/app_plugin.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/bevy_main.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/bytes.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/modules.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/render_resource.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/render_resources.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/resource.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bevy_derive-0.5.0/src/shader_defs.rs:

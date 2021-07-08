@@ -1,0 +1,12 @@
+/Users/ilya/Projects/Rust/Game/target/debug/deps/bytemuck-be669962f9a7a736.rmeta: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/zeroable.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/pod.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/contiguous.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/offset_of.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/transparent.rs
+
+/Users/ilya/Projects/Rust/Game/target/debug/deps/libbytemuck-be669962f9a7a736.rlib: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/zeroable.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/pod.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/contiguous.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/offset_of.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/transparent.rs
+
+/Users/ilya/Projects/Rust/Game/target/debug/deps/bytemuck-be669962f9a7a736.d: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/zeroable.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/pod.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/contiguous.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/offset_of.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/transparent.rs
+
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/lib.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/zeroable.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/pod.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/contiguous.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/offset_of.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.7.0/src/transparent.rs:

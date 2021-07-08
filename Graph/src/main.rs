@@ -6,6 +6,7 @@ use std::fs::File;
 use std::io::{Write, BufReader, BufRead, Error};
 use Graph::test::cfg;
 use std::cmp::Ordering::Greater;
+use std::str::FromStr;
 
 fn create_new_vertex() -> HashMap<i32, char> {
     let mut hs = HashMap::new();

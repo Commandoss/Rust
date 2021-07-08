@@ -85,7 +85,7 @@ impl<T: Default, U: Default> Node<T, U> {
 ///     T - обощенный тип представляюший ключ верщины
 ///     U - обобщенный тип представляющий хранимое значение вершины
 pub struct Graph<T, U> {
-    pub list: Vec<Node<T, U>>,
+    list: Vec<Node<T, U>>,
 }
 
 
@@ -569,7 +569,6 @@ impl<T: Hash + Eq + PartialEq + PartialOrd + Copy + std::fmt::Display + Default 
         Ok(())
     }
 }
-
 
 
 

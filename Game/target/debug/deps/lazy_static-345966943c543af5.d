@@ -1,0 +1,8 @@
+/Users/ilya/Projects/Rust/Game/target/debug/deps/lazy_static-345966943c543af5.rmeta: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-1.4.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-1.4.0/src/inline_lazy.rs
+
+/Users/ilya/Projects/Rust/Game/target/debug/deps/liblazy_static-345966943c543af5.rlib: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-1.4.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-1.4.0/src/inline_lazy.rs
+
+/Users/ilya/Projects/Rust/Game/target/debug/deps/lazy_static-345966943c543af5.d: /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-1.4.0/src/lib.rs /Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-1.4.0/src/inline_lazy.rs
+
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-1.4.0/src/lib.rs:
+/Users/ilya/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-1.4.0/src/inline_lazy.rs:
